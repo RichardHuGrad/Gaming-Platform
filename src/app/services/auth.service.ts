@@ -24,8 +24,6 @@ export class Auth {
       console.log(authResult.idTokenPayload.sub);
       this.router.navigate(['/user']);
 
-
-      
     });
 
     if(localStorage.getItem("id_token") != null){

@@ -9,6 +9,7 @@ export class PostService{
         console.log('PostService Initialized...');
     }
 
+    //Requesting data from mlab
     getPosts(){
         return this.http.get('https://api.mlab.com/api/1/databases/gaming-platform/collections/user-posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1')
             .map(res => res.json());

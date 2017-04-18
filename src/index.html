@@ -10,8 +10,6 @@
     
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="node_modules/core-js/client/shim.min.js"></script>
 
@@ -63,10 +61,9 @@
 
     <script>
       
-
+        //UI Components
         $(document).ready(function() {
             $('#example-multiple-optgroups-classes').multiselect();
-            
             
         });
 
@@ -181,6 +178,7 @@
             });
         }
 
+        //fetch the post data from the database
         function getMyPosts(){
             $('#myPosts').children().remove();
 
@@ -224,6 +222,7 @@
             });
         }
 
+        //for users create their posts
         function createMyPosts(){
             var time = Math.floor(Date.now() / 1000);
             var title = $("#title").val();
@@ -249,12 +248,14 @@
 
         }
 
+        //Show the filter function
         function refreshResult(){
             $('#allPosts').children().remove();
 
             var filterGame = $("#filterGame").val();
             var filterPlatform = $("#filterPlatform").val();
 
+            //filter games
             $.get("https://api.mlab.com/api/1/databases/gaming-platform/collections/posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1", function(result){
                 if(filterGame != 0 && filterPlatform == 0){
                     for(var i = 0; i < result.length; i++){
@@ -293,7 +294,7 @@
                     }
                 }
                 
-
+                //filter platforms
                 if(filterGame == 0 && filterPlatform != 0){
                     for(var i = 0; i < result.length; i++){
                         if(result[i].platform == filterPlatform){
@@ -332,6 +333,7 @@
                   
                 }
 
+                //filter combination of games and platforms
                 if(filterGame != 0 && filterPlatform != 0){
                     for(var i = 0; i < result.length; i++){
                         if(result[i].platform == filterPlatform && result[i].game == filterGame){
@@ -370,7 +372,7 @@
                 }
             });
 
-
+            //filter games
             $.get("https://api.mlab.com/api/1/databases/gaming-platform/collections/user-posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1", function(result){
                 if(filterGame != 0 && filterPlatform == 0){
                     for(var i = 0; i < result.length; i++){
@@ -408,7 +410,7 @@
                         }
                     }
                 }
-
+                //filter platforms
                 if(filterGame == 0 && filterPlatform != 0){
                     for(var i = 0; i < result.length; i++){
                         if(result[i].platform == filterPlatform){
@@ -447,6 +449,7 @@
                   
                 }
 
+                //filter combination of games and platforms
                 if(filterGame != 0 && filterPlatform != 0){
                     for(var i = 0; i < result.length; i++){
                         if(result[i].platform == filterPlatform && result[i].game == filterGame){
