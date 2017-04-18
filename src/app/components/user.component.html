@@ -1,5 +1,5 @@
 <div class="row">
-  <button style="left: 350px; width: 484px; position: absolute; top: 180px;" class="btn btn-info btn-md col-md-4 col-lg-4 col-sm-4" routerLink="/myprofile">My Profile</button>
+  <button style="left: 350px; width: 484px; position: absolute; top: 180px;" class="btn btn-info btn-md col-md-4 col-lg-4 col-sm-4" routerLink="/myprofile" onclick="getMyProfile()">My Profile</button>
   <button style="left: 880px; width: 384px; position: absolute; top: 180px;" class="btn btn-info btn-md col-md-4 col-lg-4 col-sm-4" routerLink="/game">Games</button>
 </div>
 
@@ -10,17 +10,51 @@
 <div class="panel-heading col-md-12 col-lg-12 col-sm-12">
  
 <div class="clearfix">
-<button id="listMe" class="pull-left btn btn-success btn-md col-md-12 col-lg-12 col-sm-12" routerLink="/mypost">List My Posts</button>
+<button id="listMe" class="pull-left btn btn-success btn-md col-md-12 col-lg-12 col-sm-12" routerLink="/mypost" onclick="getMyPosts()">List My Posts</button>
 </div>
- 
-<h3 class="mobile-guardian-header">LFG Page: All Posts</h3>
- 
+
+<h3>LFG Page: All Posts
+<button class="btn btn-info" onclick="refreshResult()">Filter</button>
+<button class="pull-right btn btn-info" onclick="getAllPosts()">Refresh</button>
+<div class="form-group">
+  <label>Filter Based on Game:</label>
+    <select class="form-control" name="color" id="filterGame">
+        <option value="0">Select a Game</option>
+        <option value="Destiny">Destiny</option>
+        <option value="Diablo 3">Diablo 3</option>
+        <option value="Left 4 Dead 2">Left 4 Dead 2</option>
+        <option value="World of Warcraft">World of Warcraft</option>
+    </select>
+</div>
+<div class="form-group">
+  <label>Filter Based on Platform:</label>
+    <select class="form-control" name="color" id="filterPlatform">
+        <option value="0">Select a Platform</option>
+        <option value="Xbox">Xbox</option>
+        <option value="PS4">PS4</option>
+        <option value="PS3">PS3</option>
+        <option value="PC">PC</option>
+        <option value="XB1">XB1</option>
+    </select>
+</div>
+<div class="form-group">
+  <label>Filter Based on Prefered Time:</label>
+    <select class="form-control" name="color">
+        <option value="0">Select a Time</option>
+        <option value="1">Morning</option>
+        <option value="2">Afternoon</option>
+        <option value="3">Night</option>
+    </select>
+</div>
+
+</h3>
 <div class="container">
   <table class="table" style="width: 1100px;">
     <thead>
       <tr>
         <th>Time</th>
         <th>Title</th>
+        <th>Description</th>
         <th>Game</th>
         <th>Platform</th>
         <th>Type of Team</th>
@@ -28,15 +62,7 @@
         <th>Start Time</th>
       </tr>
     </thead>
-    <tbody>
-      <tr class="success">
-        <td>Default</td>
-        <td>Defaultson</td>
-        <td>def@somemail.com</td>
-        <td>Default</td>
-        <td>Defaultson</td>
-        <td>def@somemail.com</td>
-      </tr>
+    <tbody id="allPosts">
     </tbody>
   </table>
 </div>

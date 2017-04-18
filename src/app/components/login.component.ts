@@ -14,6 +14,8 @@ import { Component } from '@angular/core';
     <button style="left: 540px; width: 334px; position: absolute; top: 281px;" class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
     <button style="left: 540px; width: 334px; position: absolute; top: 381px;" class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
     <a style="left: 540px; width: 334px; position: absolute; top: 381px;" routerLink="/about">Browse as a visitor...</a>
+    
+    
     <router-outlet></router-outlet>
   `,
 })

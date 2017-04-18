@@ -20,7 +20,7 @@ import { Auth } from './services/auth.service';
     </div>
     
     <h4 class="font_8"><span style="left: 1100px; position: absolute; top: 59px; font-family:comic sans ms,comic-sans-w01-regular,comic-sans-w02-regular,comic-sans-w10-regular,cursive;">Member Count: 13</span></h4>
-    <h5 class="font_8"><span style="left: 1100px; position: absolute; top: 79px; font-family:comic sans ms,comic-sans-w01-regular,comic-sans-w02-regular,comic-sans-w10-regular,cursive;">Welcome: {{UserName}}</span></h5>
+    <h5 id="Welcome" class="font_8"><span style="left: 1100px; position: absolute; top: 79px; font-family:comic sans ms,comic-sans-w01-regular,comic-sans-w02-regular,comic-sans-w10-regular,cursive;"></span></h5>
 
     <button style="left: 1100px; width: 84px; position: absolute; top: 10px;" class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
     <button style="left: 1200px; width: 84px; position: absolute; top: 10px;" class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="!auth.authenticated()">Log Out</button>

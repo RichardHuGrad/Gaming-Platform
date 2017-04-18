@@ -1,6 +1,6 @@
 <div class="row">
   <button style="left: 350px; width: 484px; position: absolute; top: 180px;" class="btn btn-info btn-md col-md-4 col-lg-4 col-sm-4" routerLink="/myprofile">My Profile</button>
-  <button style="left: 880px; width: 384px; position: absolute; top: 180px;" class="btn btn-info btn-md col-md-4 col-lg-4 col-sm-4" routerLink="/games">Games</button>
+  <button style="left: 880px; width: 384px; position: absolute; top: 180px;" class="btn btn-info btn-md col-md-4 col-lg-4 col-sm-4" routerLink="/game">Games</button>
 </div>
 
 <div class="container hp">
@@ -9,8 +9,11 @@
 <div class="panel-heading col-md-12 col-lg-12 col-sm-12">
  
 <div class="clearfix">
-<button id="listMe" class="pull-left btn btn-success btn-md col-md-9 col-lg-9 col-sm-9" data-toggle="modal" data-target="#listMeModal" routerLink="/user">List All Posts</button>
-<button id="updateMe" class="pull-right btn btn-warning btn-md" data-toggle="modal" data-target="#listMeModal" >Remove/Update My Posts</button>
+<button id="listMe" class="pull-left btn btn-success btn-md col-md-9 col-lg-9 col-sm-9" data-toggle="modal" data-target="#listMeModal" routerLink="/user" onclick="getAllPosts()">List All Posts</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="updatePost" class="btn btn-warning btn-md" data-toggle="modal" data-target="#myModalNorm" >Create</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="createPost" class="btn btn-warning btn-md" data-toggle="modal" data-target="#updateModal" >Update</button>
 </div>
  
 <h3 class="mobile-guardian-header">My Posts</h3>
@@ -19,32 +22,17 @@
   <table class="table" style="width: 1100px;">
     <thead>
       <tr>
+        <th>Time</th>
+        <th>Title</th>
+        <th>Description</th>
         <th>Game</th>
         <th>Platform</th>
         <th>Type of Team</th>
         <th>Match or Event</th>
         <th>Start Time</th>
-        <th>Description</th>
-        <th>Operation</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>Default</td>
-        <td>Defaultson</td>
-        <td>def@somemail.com</td>
-        <td>Default</td>
-        <td>Defaultson</td>
-        <td>def@somemail.com</td>
-      </tr>      
-      <tr class="success">
-        <td>Success</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-        <td>Default</td>
-        <td>Defaultson</td>
-        <td>def@somemail.com</td>
-      </tr>
+    <tbody id="myPosts">
     </tbody>
   </table>
 </div>
@@ -62,3 +50,181 @@
 </div>
  
 </div>
+
+<div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" 
+                   aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                              <button type="button" class="close" 
+                                 data-dismiss="modal">
+                                     <span aria-hidden="true">&times;</span>
+                                     <span class="sr-only">Close</span>
+                              </button>
+                              <h4 class="modal-title" id="myModalLabel">
+                                  Create a Post
+                              </h4>
+                          </div>
+                          
+                          <!-- Modal Body -->
+                          <div class="modal-body">
+                              
+                              <form role="form">
+                                <div class="form-group">
+                                  <label>Title</label>
+                                    <input type="title" class="form-control"
+                                    id="title" placeholder="Enter Title"/>
+                                </div>
+                                <div class="form-group">
+                                  <label>Game</label>
+                                    <select class="form-control" name="color" id="selgame">
+                                        <option value="0">Select a Game</option>
+                                        <option value="Destiny">Destiny</option>
+                                        <option value="Diablo 3">Diablo 3</option>
+                                        <option value="Left 4 Dead 2">Left 4 Dead 2</option>
+                                        <option value="World of Warcraft">World of Warcraft</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Platform</label>
+                                    <select class="form-control" name="color" id="platform">
+                                        <option value="0">Select a Platform</option>
+                                        <option value="Xbox">Xbox</option>
+                                        <option value="PS4">PS4</option>
+                                        <option value="PS3">PS3</option>
+                                        <option value="PC">PC</option>
+                                        <option value="XB1">XB1</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Type of Team</label>
+                                   <select class="form-control" name="color" id="tyteam">
+                                        <option value="0">Select a Type</option>
+                                        <option value="Championship">Championship</option>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Bronze">Bronze</option>
+                                        <option value="Training">Training</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Match or Event</label>
+                                   <input class="form-control"
+                                    id="match" placeholder="Match or Event"/>
+                                </div>
+                                <div class="form-group">
+                                  <label>Start Time</label>
+                                   <input class="form-control"
+                                    id="startTim" placeholder="Start Time"/>
+                                </div>
+                                <div class="form-group">
+                                  <label>Description</label>
+                                   <input class="form-control"
+                                    id="descrip"/>
+                                </div>
+                              </form>
+                          </div>
+                          
+                          <!-- Modal Footer -->
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default"
+                                      data-dismiss="modal">
+                                          Close
+                              </button>
+                              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createMyPosts()">
+                                  Submit
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" 
+                   aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                              <button type="button" class="close" 
+                                 data-dismiss="modal">
+                                     <span aria-hidden="true">&times;</span>
+                                     <span class="sr-only">Close</span>
+                              </button>
+                              <h4 class="modal-title" id="myModalLabel">
+                                  Update a Post
+                              </h4>
+                          </div>
+                          
+                          <!-- Modal Body -->
+                          <div class="modal-body">
+                              
+                              <form role="form">
+                                <div class="form-group">
+                                  <label>Title</label>
+                                    <input type="title" class="form-control"
+                                    id="title" placeholder="Enter Title"/>
+                                </div>
+                                <div class="form-group">
+                                  <label>Game</label>
+                                    <select class="form-control" name="color" id="selgame">
+                                        <option value="0">Select a Game</option>
+                                        <option value="Destiny">Destiny</option>
+                                        <option value="Diablo 3">Diablo 3</option>
+                                        <option value="Left 4 Dead 2">Left 4 Dead 2</option>
+                                        <option value="World of Warcraft">World of Warcraft</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Platform</label>
+                                    <select class="form-control" name="color" id="platform">
+                                        <option value="0">Select a Platform</option>
+                                        <option value="Xbox">Xbox</option>
+                                        <option value="PS4">PS4</option>
+                                        <option value="PS3">PS3</option>
+                                        <option value="PC">PC</option>
+                                        <option value="XB1">XB1</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Type of Team</label>
+                                   <select class="form-control" name="color" id="tyteam">
+                                        <option value="0">Select a Type</option>
+                                        <option value="Championship">Championship</option>
+                                        <option value="Gold">Gold</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Bronze">Bronze</option>
+                                        <option value="Training">Training</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Match or Event</label>
+                                   <input class="form-control"
+                                    id="match" placeholder="Match or Event"/>
+                                </div>
+                                <div class="form-group">
+                                  <label>Start Time</label>
+                                   <input class="form-control"
+                                    id="startTim" placeholder="Start Time"/>
+                                </div>
+                                <div class="form-group">
+                                  <label>Description</label>
+                                   <input class="form-control"
+                                    id="descrip"/>
+                                </div>
+                              </form>
+                          </div>
+                          
+                          <!-- Modal Footer -->
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default"
+                                      data-dismiss="modal">
+                                          Close
+                              </button>
+                              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createMyPosts()">
+                                  Submit
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>

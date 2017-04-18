@@ -7,28 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-    <!-- Polyfill(s) for older browsers -->
-
     
-    <!--<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyD6Mg5S1waYRJKEtPhyCsRMnKeeRFexy6I",
-        authDomain: "game-platform-6afc9.firebaseapp.com",
-        databaseURL: "https://game-platform-6afc9.firebaseio.com",
-        projectId: "game-platform-6afc9",
-        storageBucket: "game-platform-6afc9.appspot.com",
-        messagingSenderId: "742982777618"
-      };
-      firebase.initializeApp(config);
-    </script>-->
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="node_modules/core-js/client/shim.min.js"></script>
+
+    <script src="http://cdn.auth0.com/js/auth0/8.5/auth0.min.js"></script>
+
+    <script src="./app/lib/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="./app/lib/bootstrap-multiselect.css">
 
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
@@ -42,13 +32,462 @@
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
         // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyDa9PUFcHzAf7vtUtLVGGaQzo-9EVv0FrI",
-        authDomain: "blazing-inferno-9370.firebaseapp.com",
-        databaseURL: "https://blazing-inferno-9370.firebaseio.com",
-        storageBucket: "blazing-inferno-9370.appspot.com",
-    };
-    firebase.initializeApp(config);
+        // var config = {
+        //     apiKey: "AIzaSyDa9PUFcHzAf7vtUtLVGGaQzo-9EVv0FrI",
+        //     authDomain: "blazing-inferno-9370.firebaseapp.com",
+        //     databaseURL: "https://blazing-inferno-9370.firebaseio.com",
+        //     storageBucket: "blazing-inferno-9370.appspot.com",
+        // };
+        // firebase.initializeApp(config);
+
+
+        var webAuth = new auth0.WebAuth({
+          domain:       'huxiaodong.auth0.com',
+          clientID:     'th7Zry-VXwyK5AZMdVCRNuqfLHZRodhP'
+        });
+
+        webAuth.parseHash(window.location.hash, function(err, authResult) {
+          if (err) {
+            return console.log(err);
+          };
+
+          webAuth.client.userInfo(authResult.accessToken, function(err, user) {
+            // Now you have the user's information
+              console.log(user);
+              alert("Welcome: " + user.nickname);
+              sessionStorage.setItem('email', user.email);
+              sessionStorage.setItem('nickname', user.nickname);
+          });
+        });
+    </script>
+
+    <script>
+      
+
+        $(document).ready(function() {
+            $('#example-multiple-optgroups-classes').multiselect();
+            
+            
+        });
+
+        function getMyProfile(){
+            $("#DisplayName").val(sessionStorage.email);
+
+            $("#Welcome").val(sessionStorage.email);
+        }
+
+        function getPostProfile(){
+
+          var name = document.getElementById("DisplayName").value;
+          var age = document.getElementById("Age").value;
+          var gender = document.getElementById("Gender").value;
+          var playerid = document.getElementById("PlayerId").value;
+          var regular = document.getElementById("RegularPlayTime").value;
+          var uom = document.getElementById("UseOfMicrophone").value;
+          var pregame = document.getElementById("PreferredGames").value;
+          var playstyle = document.getElementById("PlayStyle").value;
+
+          console.log(name, age, gender, playerid, regular, uom, pregame, playstyle);
+          
+          $.ajax({
+              method: "POST",
+              url: "https://mongo-xiaodonghu-richardhu.c9users.io/api/users",
+              data:  { name: name, age: age, gender: gender, playerid: playerid, regular: regular, uom: uom, pregame: pregame, playstyle: playstyle}
+          }).done(function( msg ) {
+              alert("Saved Successfully!");
+          });
+          
+        }
+
+        function getAllPosts(){
+            $('#allPosts').children().remove();
+
+            $.get("https://api.mlab.com/api/1/databases/gaming-platform/collections/user-posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1", function(result){
+                for(var i = 0; i < result.length; i++){
+                
+                    var txt = document.createElement("tr");
+                        
+                    var time = document.createElement("td");
+                    time.innerHTML=result[i].time;
+                    var title = document.createElement("td");
+                    title.innerHTML=result[i].title;
+                    var description = document.createElement("td");
+                    description.innerHTML=result[i].description;
+                    var game = document.createElement("td");
+                    game.innerHTML=result[i].game;
+                    var platform = document.createElement("td");
+                    platform.innerHTML=result[i].platform;
+                    var teamtype = document.createElement("td");
+                    teamtype.innerHTML=result[i].teamtype;
+                    var event = document.createElement("td");
+                    event.innerHTML=result[i].event;
+                    var starttime = document.createElement("td");
+                    starttime.innerHTML=result[i].starttime;
+                    
+                    var handler = document.createElement("td");
+                    handler.innerHTML = "<button type='button' class='btn btn-default buttons-selected buttons-edit'>Details</button>";
+                    
+                    txt.appendChild(time);
+                    txt.appendChild(title);
+                    txt.appendChild(description);
+                    txt.appendChild(game);
+                    txt.appendChild(platform);
+                    txt.appendChild(teamtype);
+                    txt.appendChild(event);
+                    txt.appendChild(starttime);
+                    
+                    $('#allPosts').append(txt);
+                    
+                }
+            });
+
+            $.get("https://api.mlab.com/api/1/databases/gaming-platform/collections/posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1", function(result){
+                for(var i = 0; i < result.length; i++){
+                
+                    var txt = document.createElement("tr");
+                        
+                    var time = document.createElement("td");
+                    time.innerHTML=result[i].time;
+                    var title = document.createElement("td");
+                    title.innerHTML=result[i].title;
+                    var description = document.createElement("td");
+                    description.innerHTML=result[i].description;
+                    var game = document.createElement("td");
+                    game.innerHTML=result[i].game;
+                    var platform = document.createElement("td");
+                    platform.innerHTML=result[i].platform;
+                    var teamtype = document.createElement("td");
+                    teamtype.innerHTML=result[i].teamtype;
+                    var event = document.createElement("td");
+                    event.innerHTML=result[i].event;
+                    var starttime = document.createElement("td");
+                    starttime.innerHTML=result[i].starttime;
+                    
+                    var handler = document.createElement("td");
+                    handler.innerHTML = "<button type='button' class='btn btn-default buttons-selected buttons-edit'>Details</button>";
+                    
+                    txt.appendChild(time);
+                    txt.appendChild(title);
+                    txt.appendChild(description);
+                    txt.appendChild(game);
+                    txt.appendChild(platform);
+                    txt.appendChild(teamtype);
+                    txt.appendChild(event);
+                    txt.appendChild(starttime);
+                    
+                    $('#allPosts').append(txt);
+                    
+                }
+            });
+        }
+
+        function getMyPosts(){
+            $('#myPosts').children().remove();
+
+            $.get("https://api.mlab.com/api/1/databases/gaming-platform/collections/posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1", function(result){
+                for(var i = 0; i < result.length; i++){
+                
+                    var txt = document.createElement("tr");
+                        
+                    var time = document.createElement("td");
+                    time.innerHTML=result[i].time;
+                    var title = document.createElement("td");
+                    title.innerHTML=result[i].title;
+                    var description = document.createElement("td");
+                    description.innerHTML=result[i].description;
+                    var game = document.createElement("td");
+                    game.innerHTML=result[i].game;
+                    var platform = document.createElement("td");
+                    platform.innerHTML=result[i].platform;
+                    var teamtype = document.createElement("td");
+                    teamtype.innerHTML=result[i].teamtype;
+                    var event = document.createElement("td");
+                    event.innerHTML=result[i].event;
+                    var starttime = document.createElement("td");
+                    starttime.innerHTML=result[i].starttime;
+                    
+                    var handler = document.createElement("td");
+                    handler.innerHTML = "<button type='button' class='btn btn-default buttons-selected buttons-edit'>Details</button>";
+                    
+                    txt.appendChild(time);
+                    txt.appendChild(title);
+                    txt.appendChild(description);
+                    txt.appendChild(game);
+                    txt.appendChild(platform);
+                    txt.appendChild(teamtype);
+                    txt.appendChild(event);
+                    txt.appendChild(starttime);
+                    
+                    $('#myPosts').append(txt);
+                    
+                }
+            });
+        }
+
+        function createMyPosts(){
+            var time = Math.floor(Date.now() / 1000);
+            var title = $("#title").val();
+            var description = $("#descrip").val();
+            var game = $("#selgame").val();
+            var platform = $("#platform").val();
+            var teamtype = $("#tyteam").val();
+            var event = $("#match").val();
+            var starttime = $("#startTim").val();
+
+            console.log(time, title, description, game, platform, teamtype, event, starttime);
+
+            $.ajax({
+                method: "POST",
+                url: "https://mongo-xiaodonghu-richardhu.c9users.io/api/posts",
+                data:  { time: time, title: title, description: description, game: game, platform: platform, teamtype: teamtype, event: event, starttime: starttime}
+            }).done(function( msg ) {
+                
+            });
+        }
+
+        function UpdateMyPosts(){
+
+        }
+
+        function refreshResult(){
+            $('#allPosts').children().remove();
+
+            var filterGame = $("#filterGame").val();
+            var filterPlatform = $("#filterPlatform").val();
+
+            $.get("https://api.mlab.com/api/1/databases/gaming-platform/collections/posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1", function(result){
+                if(filterGame != 0 && filterPlatform == 0){
+                    for(var i = 0; i < result.length; i++){
+                        if(result[i].game == filterGame){
+                            
+                            var txt = document.createElement("tr");
+                        
+                            var time = document.createElement("td");
+                            time.innerHTML=result[i].time;
+                            var title = document.createElement("td");
+                            title.innerHTML=result[i].title;
+                            var description = document.createElement("td");
+                            description.innerHTML=result[i].description;
+                            var game = document.createElement("td");
+                            game.innerHTML=result[i].game;
+                            var platform = document.createElement("td");
+                            platform.innerHTML=result[i].platform;
+                            var teamtype = document.createElement("td");
+                            teamtype.innerHTML=result[i].teamtype;
+                            var event = document.createElement("td");
+                            event.innerHTML=result[i].event;
+                            var starttime = document.createElement("td");
+                            starttime.innerHTML=result[i].starttime;
+                            
+                            txt.appendChild(time);
+                            txt.appendChild(title);
+                            txt.appendChild(description);
+                            txt.appendChild(game);
+                            txt.appendChild(platform);
+                            txt.appendChild(teamtype);
+                            txt.appendChild(event);
+                            txt.appendChild(starttime);
+                            
+                            $('#allPosts').append(txt);
+                        }
+                    }
+                }
+                
+
+                if(filterGame == 0 && filterPlatform != 0){
+                    for(var i = 0; i < result.length; i++){
+                        if(result[i].platform == filterPlatform){
+                            
+                            var txt = document.createElement("tr");
+                        
+                            var time = document.createElement("td");
+                            time.innerHTML=result[i].time;
+                            var title = document.createElement("td");
+                            title.innerHTML=result[i].title;
+                            var description = document.createElement("td");
+                            description.innerHTML=result[i].description;
+                            var game = document.createElement("td");
+                            game.innerHTML=result[i].game;
+                            var platform = document.createElement("td");
+                            platform.innerHTML=result[i].platform;
+                            var teamtype = document.createElement("td");
+                            teamtype.innerHTML=result[i].teamtype;
+                            var event = document.createElement("td");
+                            event.innerHTML=result[i].event;
+                            var starttime = document.createElement("td");
+                            starttime.innerHTML=result[i].starttime;
+                            
+                            txt.appendChild(time);
+                            txt.appendChild(title);
+                            txt.appendChild(description);
+                            txt.appendChild(game);
+                            txt.appendChild(platform);
+                            txt.appendChild(teamtype);
+                            txt.appendChild(event);
+                            txt.appendChild(starttime);
+                            
+                            $('#allPosts').append(txt);
+                        }
+                    }
+                  
+                }
+
+                if(filterGame != 0 && filterPlatform != 0){
+                    for(var i = 0; i < result.length; i++){
+                        if(result[i].platform == filterPlatform && result[i].game == filterGame){
+                            
+                            var txt = document.createElement("tr");
+                        
+                            var time = document.createElement("td");
+                            time.innerHTML=result[i].time;
+                            var title = document.createElement("td");
+                            title.innerHTML=result[i].title;
+                            var description = document.createElement("td");
+                            description.innerHTML=result[i].description;
+                            var game = document.createElement("td");
+                            game.innerHTML=result[i].game;
+                            var platform = document.createElement("td");
+                            platform.innerHTML=result[i].platform;
+                            var teamtype = document.createElement("td");
+                            teamtype.innerHTML=result[i].teamtype;
+                            var event = document.createElement("td");
+                            event.innerHTML=result[i].event;
+                            var starttime = document.createElement("td");
+                            starttime.innerHTML=result[i].starttime;
+                            
+                            txt.appendChild(time);
+                            txt.appendChild(title);
+                            txt.appendChild(description);
+                            txt.appendChild(game);
+                            txt.appendChild(platform);
+                            txt.appendChild(teamtype);
+                            txt.appendChild(event);
+                            txt.appendChild(starttime);
+                            
+                            $('#allPosts').append(txt);
+                        }
+                    }
+                }
+            });
+
+
+            $.get("https://api.mlab.com/api/1/databases/gaming-platform/collections/user-posts?apiKey=3qyLsr9-pCvIhWM6vUda65-ZHzEZQXA1", function(result){
+                if(filterGame != 0 && filterPlatform == 0){
+                    for(var i = 0; i < result.length; i++){
+                        if(result[i].game == filterGame){
+                            
+                            var txt = document.createElement("tr");
+                        
+                            var time = document.createElement("td");
+                            time.innerHTML=result[i].time;
+                            var title = document.createElement("td");
+                            title.innerHTML=result[i].title;
+                            var description = document.createElement("td");
+                            description.innerHTML=result[i].description;
+                            var game = document.createElement("td");
+                            game.innerHTML=result[i].game;
+                            var platform = document.createElement("td");
+                            platform.innerHTML=result[i].platform;
+                            var teamtype = document.createElement("td");
+                            teamtype.innerHTML=result[i].teamtype;
+                            var event = document.createElement("td");
+                            event.innerHTML=result[i].event;
+                            var starttime = document.createElement("td");
+                            starttime.innerHTML=result[i].starttime;
+                            
+                            txt.appendChild(time);
+                            txt.appendChild(title);
+                            txt.appendChild(description);
+                            txt.appendChild(game);
+                            txt.appendChild(platform);
+                            txt.appendChild(teamtype);
+                            txt.appendChild(event);
+                            txt.appendChild(starttime);
+                            
+                            $('#allPosts').append(txt);
+                        }
+                    }
+                }
+
+                if(filterGame == 0 && filterPlatform != 0){
+                    for(var i = 0; i < result.length; i++){
+                        if(result[i].platform == filterPlatform){
+                            
+                            var txt = document.createElement("tr");
+                        
+                            var time = document.createElement("td");
+                            time.innerHTML=result[i].time;
+                            var title = document.createElement("td");
+                            title.innerHTML=result[i].title;
+                            var description = document.createElement("td");
+                            description.innerHTML=result[i].description;
+                            var game = document.createElement("td");
+                            game.innerHTML=result[i].game;
+                            var platform = document.createElement("td");
+                            platform.innerHTML=result[i].platform;
+                            var teamtype = document.createElement("td");
+                            teamtype.innerHTML=result[i].teamtype;
+                            var event = document.createElement("td");
+                            event.innerHTML=result[i].event;
+                            var starttime = document.createElement("td");
+                            starttime.innerHTML=result[i].starttime;
+                            
+                            txt.appendChild(time);
+                            txt.appendChild(title);
+                            txt.appendChild(description);
+                            txt.appendChild(game);
+                            txt.appendChild(platform);
+                            txt.appendChild(teamtype);
+                            txt.appendChild(event);
+                            txt.appendChild(starttime);
+                            
+                            $('#allPosts').append(txt);
+                        }
+                    }
+                  
+                }
+
+                if(filterGame != 0 && filterPlatform != 0){
+                    for(var i = 0; i < result.length; i++){
+                        if(result[i].platform == filterPlatform && result[i].game == filterGame){
+                            
+                            var txt = document.createElement("tr");
+                        
+                            var time = document.createElement("td");
+                            time.innerHTML=result[i].time;
+                            var title = document.createElement("td");
+                            title.innerHTML=result[i].title;
+                            var description = document.createElement("td");
+                            description.innerHTML=result[i].description;
+                            var game = document.createElement("td");
+                            game.innerHTML=result[i].game;
+                            var platform = document.createElement("td");
+                            platform.innerHTML=result[i].platform;
+                            var teamtype = document.createElement("td");
+                            teamtype.innerHTML=result[i].teamtype;
+                            var event = document.createElement("td");
+                            event.innerHTML=result[i].event;
+                            var starttime = document.createElement("td");
+                            starttime.innerHTML=result[i].starttime;
+                            
+                            txt.appendChild(time);
+                            txt.appendChild(title);
+                            txt.appendChild(description);
+                            txt.appendChild(game);
+                            txt.appendChild(platform);
+                            txt.appendChild(teamtype);
+                            txt.appendChild(event);
+                            txt.appendChild(starttime);
+                            
+                            $('#allPosts').append(txt);
+                        }
+                    }
+                }
+            });
+
+            
+        }
+
     </script>
 
   </head>

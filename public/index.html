@@ -1,65 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <title>Angular QuickStart</title>
+    <base href="/">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/3.7.6/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/3.7.6/firebase-auth.js"></script>
-    <script defer src="/__/firebase/3.7.6/firebase-database.js"></script>
-    <script defer src="/__/firebase/3.7.6/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/3.7.6/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+    <!-- Polyfill(s) for older browsers -->
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
+    
+    <!--<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('data', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD6Mg5S1waYRJKEtPhyCsRMnKeeRFexy6I",
+        authDomain: "game-platform-6afc9.firebaseapp.com",
+        databaseURL: "https://game-platform-6afc9.firebaseio.com",
+        projectId: "game-platform-6afc9",
+        storageBucket: "game-platform-6afc9.appspot.com",
+        messagingSenderId: "742982777618"
+      };
+      firebase.initializeApp(config);
+    </script>-->
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="https://cdn.auth0.com/js/lock/10.14/lock.min.js"></script>
+
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('main.js').catch(function(err){ console.error(err); });
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDa9PUFcHzAf7vtUtLVGGaQzo-9EVv0FrI",
+        authDomain: "blazing-inferno-9370.firebaseapp.com",
+        databaseURL: "https://blazing-inferno-9370.firebaseio.com",
+        storageBucket: "blazing-inferno-9370.appspot.com",
+    };
+    firebase.initializeApp(config);
+    </script>
+
+  </head>
+
+  <body>
+
+    
+
+    <iframe style="display:none" data-ad-client="ca-pub-1786553880586297" id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20170405/r20170110/zrt_lookup.html#"></iframe><script src="https://pagead2.googlesyndication.com/pagead/osd.js"></script><script>google_ad_client="pub-1786553880586297";google_ad_format="300x250_as";google_ad_height="250";google_ad_modifications={"plle":true,"eids":[],"loeids":[]};google_ad_slot="";google_ad_type="text";google_ad_width="300";google_alternate_ad_url="http:\/\/www.wix.com\/alternate\/page\/when\/the\/ad\/cannot\/be\/displayed";google_font_size="medium";google_page_url="https:\/\/rosechard123.wixsite.com\/main";google_loader_used="sa";google_ad_unit_key="1012086373";google_ad_dom_fingerprint="2216780190";google_show_ads_impl=true;google_unique_id=1;google_async_iframe_id="aswift_0";google_start_time=1491935700975;google_pub_vars = "JTdCJTIyZ29vZ2xlX2FkX2NsaWVudCUyMiUzQSUyMnB1Yi0xNzg2NTUzODgwNTg2Mjk3JTIyJTJDJTIyZ29vZ2xlX2FkX2Zvcm1hdCUyMiUzQSUyMjMwMHgyNTBfYXMlMjIlMkMlMjJnb29nbGVfYWRfaGVpZ2h0JTIyJTNBJTIyMjUwJTIyJTJDJTIyZ29vZ2xlX2FkX21vZGlmaWNhdGlvbnMlMjIlM0ElN0IlMjJwbGxlJTIyJTNBdHJ1ZSUyQyUyMmVpZHMlMjIlM0ElNUIlNUQlMkMlMjJsb2VpZHMlMjIlM0ElNUIlNUQlN0QlMkMlMjJnb29nbGVfYWRfc2xvdCUyMiUzQSUyMiUyMiUyQyUyMmdvb2dsZV9hZF90eXBlJTIyJTNBJTIydGV4dCUyMiUyQyUyMmdvb2dsZV9hZF93aWR0aCUyMiUzQSUyMjMwMCUyMiUyQyUyMmdvb2dsZV9hbHRlcm5hdGVfYWRfdXJsJTIyJTNBJTIyaHR0cCUzQSUyRiUyRnd3dy53aXguY29tJTJGYWx0ZXJuYXRlJTJGcGFnZSUyRndoZW4lMkZ0aGUlMkZhZCUyRmNhbm5vdCUyRmJlJTJGZGlzcGxheWVkJTIyJTJDJTIyZ29vZ2xlX2ZvbnRfc2l6ZSUyMiUzQSUyMm1lZGl1bSUyMiUyQyUyMmdvb2dsZV9wYWdlX3VybCUyMiUzQSUyMmh0dHBzJTNBJTJGJTJGcm9zZWNoYXJkMTIzLndpeHNpdGUuY29tJTJGbWFpbiUyMiUyQyUyMmdvb2dsZV9sb2FkZXJfdXNlZCUyMiUzQSUyMnNhJTIyJTJDJTIyZ29vZ2xlX2FkX3VuaXRfa2V5JTIyJTNBJTIyMTAxMjA4NjM3MyUyMiUyQyUyMmdvb2dsZV9hZF9kb21fZmluZ2VycHJpbnQlMjIlM0ElMjIyMjE2NzgwMTkwJTIyJTdE";google_bpp=12;google_async_rrc=0;google_iframe_start_time=new Date().getTime();</script><script src="https://pagead2.googlesyndication.com/pagead/js/r20170405/r20170110/show_ads_impl.js"></script>
+
+    <my-app>Loading AppComponent content here ...</my-app>
   </body>
 </html>
